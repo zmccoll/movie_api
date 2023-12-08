@@ -1,0 +1,98 @@
+const express = require('express'),
+    morgan = require('morgan');
+
+const app = express();
+
+// using express to make syntax easier(example)
+let topMovies = [
+    {
+        title: 'The Shawshank Redemption',
+        director: 'Frank Darabont'
+    },
+    {
+        title: 'The Godfather',
+        director: 'Francis Ford Coppola'
+    },
+    {
+        title: 'The Dark Knight',
+        director: 'Christopher Nolan'
+    },
+    {
+        title: 'The Godfather pt. 2',
+        director: 'Francis Ford Coppola'
+    },
+    {
+        title: '12 Angry Men',
+        director: 'Sidney Lumet'
+    },
+    {
+        title: 'Schindler\'s List',
+        director: 'Steven Spielberg'
+    },
+    {
+        title: 'The Lord of the Rings: The Return of the King',
+        director: 'Peter Jackson'
+    },
+    {
+        title: 'Pulp Fiction',
+        director: 'Quentin Tarantino'
+    },
+    {
+        title: 'The Lord of the Rings: The Fellowship of the Ring',
+        director: 'Peter Jackson'
+    },
+    {
+        title: 'The Good, the Bad and the Ugly',
+        director: 'Sergio Leone'
+    },
+];
+
+//serving static file
+app.use(express.static('public'));
+
+//using morgan to log infor
+app.use(morgan('common'));
+
+//Get Requests
+app.get('/', (req, res) => {
+    res.send('Welcome to my Movie App!');
+});
+
+app.get('/documentation', (req, res) => {
+    res.sendFile('public/documentaion.html', { root: __dirname });
+});
+
+app.get('/movies', (req, res) => {
+    res.json(topMovies);
+});
+
+//error handling
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Oopsie Poopsie something went wrong');
+});
+
+//listen for requests
+app.listen(8080, () => {
+    console.log('your app is listening on port 8080');
+});
+
+
+console.log('My first Node test server is running on port 8080');
+
+
+/* understanding url requests by using node modules
+const http = require('http'),
+    url = require('url');
+
+http.createServer((request, response) => {
+    let requestURL = url.parse(request.url, true);
+    if (requestURL.pathname == '/documentation.html') {
+        response.writeHead(200, {'Content-Type': 'text/plain'});
+        response.end('Documentation on the bookclub API. \n');
+    } else {
+        response.writeHead(200, {'Content-Type': 'text/plain'});
+        response.end('Welcome to my bookclub!\n');
+    }
+}).listen(8080);
+*/
