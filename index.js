@@ -3,7 +3,7 @@ const express = require('express'),
 
 const app = express();
 
-// using express to make syntax easier(example)
+// using express to make syntax easier
 let topMovies = [
     {
         title: 'The Shawshank Redemption',
@@ -50,7 +50,7 @@ let topMovies = [
 //serving static file
 app.use(express.static('public'));
 
-//using morgan to log infor
+//using morgan to log info
 app.use(morgan('common'));
 
 //Get Requests
@@ -69,7 +69,7 @@ app.get('/movies', (req, res) => {
 //error handling
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    res.status(500).send('Oopsie Poopsie something went wrong');
+    res.status(500).send('Oops! Something went wrong!');
 });
 
 //listen for requests
