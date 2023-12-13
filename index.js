@@ -1,8 +1,9 @@
 const express = require('express'),
-    morgan = require('morgan');
-
-const app = express();
-
+    morgan = require('morgan'),
+    app = require('express'),
+    bodyParser = require('body-parser'),
+    uuid = require('uuid');
+    
 // using express to make syntax easier
 let topMovies = [
     {
@@ -53,18 +54,41 @@ app.use(express.static('public'));
 //using morgan to log info
 app.use(morgan('common'));
 
-//Get Requests
-app.get('/', (req, res) => {
-    res.send('Welcome to my Movie App!');
+//using body parser
+app.use(bodyParser.json());
+
+//list of movies requests
+app.get('/movies', (req, res) => {
+    res.send('Sucess, here is the list of movies!');
 });
 
 app.get('/documentation', (req, res) => {
     res.sendFile('public/documentaion.html', { root: __dirname });
 });
-
+/*
 app.get('/movies', (req, res) => {
     res.json(topMovies);
 });
+*/
+//return data about a single movie
+app.get('/movies/title/:title', (req, res) => {
+    res.send('Here is data about the requested movie');
+})
+
+//return data about a genre
+app.get('/movies/genre/:genre', (req, res) => {
+    res.send('Here is movies based on your genre search');
+})
+
+//return data about a director
+app.get('/movies/director/:director', (req, res) => {
+    res.send('Here is info on the director you requested');
+})
+
+//user registration
+app.post('/movies/newuser', (req, res) => {
+    res.send('your new account has been created');
+})
 
 //error handling
 app.use((err, req, res, next) => {
