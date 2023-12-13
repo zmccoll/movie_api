@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>myFlix</title>
+        <link rel="stylesheet" type="text/css" href="css/styles.css">
     </head>
 
     <body>
@@ -25,14 +26,14 @@
                 </tr>
             </thead>
             <tbody> 
-                <tr> <!--Return list of movies to user-->
+                <tr class="tinfo"> <!--Return list of movies to user-->
                     <td>Return the list of movies</td>
                     <td>/movies</td>
                     <td>GET</td>
                     <td>none</td>
                     <td>JSON object holding the list of movies</td>
                 </tr>
-                <tr> <!--Return data about a single movie-->
+                <tr class="tinfo"> <!--Return data about a single movie-->
                     <td>Return data about a movie</td>
                     <td>/movies/[title]</td>
                     <td>GET</td>
@@ -46,16 +47,16 @@
                         }
                     </td>
                 </tr>
-                <tr> <!--  return data about a genre-->
+                <tr class="tinfo"> <!--  return data about a genre-->
                     <td>Return movies that fit a certain genre</td>
                     <td>/movies/genre/[genre]</td>
                     <td>GET</td>
                     <td>none</td>
                     <td>JSON object holding data that list movies that fit a ceratin genre</td>
                 </tr>
-                <tr> <!--return data about a director-->
+                <tr class="tinfo"> <!--return data about a director-->
                     <td>Return info about a director</td>
-                    <td>/movies/[director]</td>
+                    <td>/movies/director/[director]</td>
                     <td>GET</td>
                     <td>none</td>
                     <td>JSON object holding info on requested director, example:
@@ -67,7 +68,7 @@
                         }
                     </td>
                 </tr>
-                <tr> <!--allow new users to register-->
+                <tr class="tinfo"> <!--allow new users to register-->
                     <td>Allow new users to register</td>
                     <td>/movies/newuser</td>
                     <td>POST</td>
