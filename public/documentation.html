@@ -6,9 +6,85 @@
     </head>
 
     <body>
+        <h1>Description</h1>
         <p>This web application will provide users with loads of information about all of their favorite movies and actors!  Not only will your be able to look up your<br>
             favorite actors and movies at your leisure, you will be able to personalize your experience.  In this application, you will be able to create your own accounte which<br>
             will allow you make personalized lists of your go-to movies and which actors make the movie a must-see!
         </p>
+
+        
+        <h2>List of URL endpoints and what they do</h2>
+        <table class="endPointURL">
+            <thead class="thead">
+                <tr>
+                    <th>Business Logic</th>
+                    <th>URL</th>
+                    <th>HTTP Method</th>
+                    <th>Request body data format</th>
+                    <th>Response body data format</th>
+                </tr>
+            </thead>
+            <tbody> 
+                <tr> <!--Return list of movies to user-->
+                    <td>Return the list of movies</td>
+                    <td>/movies</td>
+                    <td>GET</td>
+                    <td>none</td>
+                    <td>JSON object holding the list of movies</td>
+                </tr>
+                <tr> <!--Return data about a single movie-->
+                    <td>Return data about a movie</td>
+                    <td>/movies/[title]</td>
+                    <td>GET</td>
+                    <td>none</td>
+                    <td>JSON object holding data about a single movie, example:
+                        {
+                            title:
+                            director:
+                            genre:
+                            description:
+                        }
+                    </td>
+                </tr>
+                <tr> <!--  return data about a genre-->
+                    <td>Return movies that fit a certain genre</td>
+                    <td>/movies/genre/[genre]</td>
+                    <td>GET</td>
+                    <td>none</td>
+                    <td>JSON object holding data that list movies that fit a ceratin genre</td>
+                </tr>
+                <tr> <!--return data about a director-->
+                    <td>Return info about a director</td>
+                    <td>/movies/[director]</td>
+                    <td>GET</td>
+                    <td>none</td>
+                    <td>JSON object holding info on requested director, example:
+                        {
+                            name:
+                            bio:
+                            born:
+                            death:
+                        }
+                    </td>
+                </tr>
+                <tr> <!--allow new users to register-->
+                    <td>Allow new users to register</td>
+                    <td>/movies/newuser</td>
+                    <td>POST</td>
+                    <td>JSON object holding data about new user, structured like:
+                        {
+                            username:
+                            password:
+                            confirm password:
+                        }
+                    </td>
+                    <td>JSON object confirming success or denial about new user</td>
+                </tr>
+                <tr>
+
+                </tr>
+            </tbody>
+        </table>
+
     </body>
 </html>
