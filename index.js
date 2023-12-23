@@ -1,6 +1,6 @@
 const express = require('express'),
     morgan = require('morgan'),
-    app = require('express'),
+    //app = require('express'),
     bodyParser = require('body-parser'),
     uuid = require('uuid');
     
@@ -47,6 +47,8 @@ let topMovies = [
         director: 'Sergio Leone'
     },
 ];
+
+const app = express();
 
 //serving static file
 app.use(express.static('public'));
