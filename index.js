@@ -90,7 +90,7 @@ app.get('/movies', (req, res) => {
 */
 //return data about a single movie
 app.get('/movies/:Title', async (req, res) => {
-    await Movies.findOne({ Movies: req.params.Title})
+    await Movies.findOne({ Title: req.params.Title})
         .then((movie) => {
             res.json(movie);
         })
@@ -172,7 +172,7 @@ app.get('/users/:Username', async (req, res) => {
 { Username: String (required), Password: String (required), Email: String(required), Birthday: Date}
 */
 app.put('users/:Username', async (req, res) => {
-    await User.findOneAndUpdate({ Username: req.params.Username }, { $set:
+    await Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
     {
         Username: req.body.Username,
         Password: req.body.Password,
