@@ -10,6 +10,8 @@ const Models = require('./models.js');
 
 const Movies = Models.Movie;
 const Users = Models.User;
+const Genres = Models.Genre;
+const Directors = Models.Director; 
 
 mongoose.connect('mongodb://localhost:27017/cfDB', { useNewUrlParser: true, useUnifiedTopology: true });
     
@@ -83,11 +85,7 @@ app.get('/movies', async (req, res) => {
 app.get('/documentation', (req, res) => {
     res.sendFile('public/documentaion.html', { root: __dirname });
 });
-/*
-app.get('/movies', (req, res) => {
-    res.json(topMovies);
-});
-*/
+
 //return data about a single movie
 app.get('/movies/:Title', async (req, res) => {
     await Movies.findOne({ Title: req.params.Title})
@@ -101,14 +99,28 @@ app.get('/movies/:Title', async (req, res) => {
 });
 
 //return data about a genre
-app.get('/movies/genre/:genre', (req, res) => {
-    res.send('Here is movies based on your genre search');
-})
+app.get('/genres/:Name', async (req, res) => {
+    await Genres.findOne({ Name: req.params.Name })
+        .then((genre) => {
+            res.json(genre);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send(err);
+        });
+});
 
 //return data about a director
-app.get('/movies/director/:director', (req, res) => {
-    res.send('Here is info on the director you requested');
-})
+app.get('/directors/:Name', async (req, res) => {
+    await Directors.findOne({ Name: req.params.Name })
+        .then((director) => {
+            res.json(director);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send(err);
+        });
+});
 
 //user registration
 /*app.post('/users', (req, res) => {
