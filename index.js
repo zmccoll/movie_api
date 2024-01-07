@@ -205,7 +205,7 @@ app.put('users/:Username', async (req, res) => {
 //Add a movie to user's list of favorites
 app.post('/users/:Username/movies/:MovieID', async (req, res) => {
     await Users.findOneAndUpdate({ Username: req.params.Username }, {
-        $push: { FavorieMovies: req.params.MovieID }
+        $push: { FavoriteMovies: req.params.MovieID }
     },
     { new: true }) //this line makes sure that the updated document is returned
     .then((updatedUser) => {
@@ -216,6 +216,21 @@ app.post('/users/:Username/movies/:MovieID', async (req, res) => {
         res.status(500).send('Error: ' + err);
     });
 });
+
+//Deleting a movie from favorite movie list
+app.delete('/users/:Username/movies/:MovieID', async (req, res) => {
+    await Users.findOneAndUpdate({ Username: req.params.Username }, {
+        $pull:  {FavoriteMovies: req.params.MovieID },
+        },
+        { new: true }) //this line makes sure updated document is returned
+        .then((updatedList) => {
+            res.json(updatedList);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error ' + err);
+        })
+})
 
 // Delete a user by username
 app.delete('/users/:Username', async (req, res) => {
