@@ -189,7 +189,7 @@ app.get('/users/:Username', async (req, res) => {
 /* expected in JSON format
 { Username: String (required), Password: String (required), Email: String(required), Birthday: Date}
 */
-app.put('/users/:Username', async (req, res) => {
+app.put('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res) => {
     
     //condition to check
     if(req.user.Username !== req.params.Username) {
@@ -215,9 +215,15 @@ app.put('/users/:Username', async (req, res) => {
 });
     
 //Add a movie to user's list of favorites
-app.post('/users/:Username/movies/:MovieId', async (req, res) => {
+app.post('/users/:Username/movies/:MovieId', passport.authenticate('jwt', { session: false }),async (req, res) => {
+    
+    //condition to check
+    if(req.user.Username !== req.params.Username) {
+        return res.status(400).send('Permission Denied');
+    }
+
     await Users.findOneAndUpdate({ Username: req.params.Username }, {
-        $push: { FavoriteMovies: req.params.Title }
+        $push: { FavoriteMovies: req.params.MovieId }
     },
     { new: true }) //this line makes sure that the updated document is returned
     .then((updatedUser) => {
@@ -230,7 +236,7 @@ app.post('/users/:Username/movies/:MovieId', async (req, res) => {
 });
 
 //Deleting a movie from favorite movie list
-app.delete('/users/:Username/movies/:MovieId', async (req, res) => {
+app.delete('/users/:Username/movies/:MovieId', passport.authenticate('jwt', { session: false }), async (req, res) => {
     await Users.findOneAndUpdate({ Username: req.params.Username }, {
         $pull:  {FavoriteMovies: req.params.Title },
         },
@@ -246,6 +252,13 @@ app.delete('/users/:Username/movies/:MovieId', async (req, res) => {
 
 // Delete a user by username
 app.delete('/users/:Username', async (req, res) => {
+    
+    //condition to check
+    if(req.user.Username !== req.params.Username) {
+            return res.status(400).send('Permission Denied');
+        }
+        
+    
     await Users.findOneAndDelete({ Username: req.params.Username })
         .then((user) => {
             if(!user) {
