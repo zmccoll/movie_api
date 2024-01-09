@@ -41,22 +41,24 @@
                     <td>JSON object holding data about a single movie, example:
                         {
                             title:
-                            director:
-                            genre:
                             description:
+                            genre:
+                            director:
+                            actors:
+                            imageURL:
                         }
                     </td>
                 </tr>
                 <tr class="tinfo"> <!--  return data about a genre-->
                     <td>Return movies that fit a certain genre</td>
-                    <td>/movies/genre/[genre]</td>
+                    <td>/genres/[genre]</td>
                     <td>GET</td>
                     <td>none</td>
-                    <td>JSON object holding data that list movies that fit a ceratin genre</td>
+                    <td>JSON object holding a description about a genre</td>
                 </tr>
                 <tr class="tinfo"> <!--return data about a director-->
                     <td>Return info about a director</td>
-                    <td>/movies/director/[director]</td>
+                    <td>/directors/[director]</td>
                     <td>GET</td>
                     <td>none</td>
                     <td>JSON object holding info on requested director, example:
@@ -70,33 +72,58 @@
                 </tr>
                 <tr class="tinfo"> <!--allow new users to register-->
                     <td>Allow new users to register</td>
-                    <td>/movies/newuser</td>
+                    <td>/users</td>
                     <td>POST</td>
                     <td>JSON object holding data about new user, structured like:
                         {
                             username:
                             password:
-                            confirm password:
+                            email:
+                            birthday
                         }
                     </td>
                     <td>JSON object confirming success or denial about new user</td>
                 </tr>
                 <tr>
+                    <td>Searching for user by username</td>
+                    <td>users/[username]</td>
+                    <td>GET</td>
+                    <td>null</td>
+                    <td>A JSON object showing the requested user</td>
+                </tr>
+                <tr>
+                    <td>User updating their info</td>
+                    <td>users/[username]</td>
+                    <td>PUT</td>
+                    <td>JSON object holding data that user wants to update, structured like:
+                        {
+                            username:
+                            password:
+                            email:
+                            birthday:
+                        }
+                    </td>
+                    <td>A JSON object showing the data that the user updated</td>
+                </tr>
+                <tr>
                     <td>Allow Users to add a movie to their favorites list</td>
-                    <td>/movies/user/movies</td>
+                    <td>/users/[username]/movies/[movieId]</td>
                     <td>POST</td>
+                    <td>null</td>
                     <td>A JSON object showing a list of movies that the user has favorited</td>
                 </tr>
                 <tr>
                     <td>User removes a movies from the favorites list</td>
-                    <td>/movies/user/movies</td>
+                    <td>/users/[username]/movies/[movieId]</td>
                     <td>DELTE</td>
+                    <td>null</td>
                     <td>A confirmation showing that the movie has been removed from the favorites list</td>
                 </tr>
                 <tr>
                     <td>User deregistration</td>
-                    <td>/movies/user</td>
+                    <td>/users/[username]</td>
                     <td>DELETE</td>
+                    <td>null</td>
                     <td>A confirmation showing that the user has successfully deregisted their account</td>
                 </tr>
             </tbody>
