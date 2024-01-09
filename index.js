@@ -192,10 +192,10 @@ app.get('/users/:Username', async (req, res) => {
 app.put('/users/:Username', async (req, res) => {
     
     //condition to check
-    /*if(req.user.Username !== req.params.Username) {
+    if(req.user.Username !== req.params.Username) {
         return res.status(400).send('Permission Denied');
     }
-    */
+    
     await Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
     {
         Username: req.body.Username,
