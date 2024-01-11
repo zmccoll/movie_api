@@ -4,6 +4,8 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     uuid = require('uuid');
 
+const { check, validationResult } = require('express-validator');
+
 // requiring mongoose, as well as importing files and models from models.js file
 const mongoose = require('mongoose');
 const Models = require('./models.js');
@@ -72,6 +74,23 @@ app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const cors = require('cors');
+app.use(cors());
+
+/* code for allowing specific origins(need to expand)
+let allowedOrigins = ['http://localhost:8080', 'http://teststite.com'];
+app.use(cors( {
+    origin: (origin, callback) => {
+        if(!origin) return callback(null, true);
+        if(allowedOrigins.indexOf(origin) === -1) { // if a specific origin isn't found on the list of allowed origins
+            let message = 'The CORS policty for this application does not allow access from origin ' + origin;
+            return callback(new Error(message ), false);
+        }
+        return callback(null, true);
+    }
+}));
+*/
+
 let auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
@@ -136,6 +155,20 @@ app.get('/directors/:Name', async (req, res) => {
 /* expecting JSON in this format
 { ID: Integer, Username: String, Password: String, Email: String, Birthday: Date } */
 app.post('/users', async (req, res) => {
+    [ // validation logic, can chain methods(line 161 means 'is not empty'), line 159 requires a minimum of 5 characters
+        check('Username', 'Username is required').isLength({min: 5}),
+        check('Username', 'Username contains non alphanumeric characters - not allowed').isAlphanumeric(),
+        check('Password', 'Password is required').not().isEmpty(),
+        check('Email', 'Email does not appear to be valid').isEmail()
+    ], async (req, res) => {
+        let errors = validationResult(req); // check the validation object for errors
+
+        if (!errors.isEmpty()) {
+            return res.status(422).json({ errors: errors.array() });
+        }
+    }
+    
+    let hashedPassword = Users.hashPassword(req.body.Password); //will hash the password and store in database
     await Users.findOne({ Username: req.body.Username })
     .then((user) => {
         if (user) {
@@ -144,7 +177,7 @@ app.post('/users', async (req, res) => {
             Users
                 .create({
                     Username: req.body.Username,
-                    Password: req.body.Password,
+                    Password: hashedPassword,
                     Email: req.body.Email,
                     Birthday: req.body.Birthday
                 })
@@ -280,8 +313,9 @@ app.use((err, req, res, next) => {
 });
 
 //listen for requests
-app.listen(8080, () => {
-    console.log('your app is listening on port 8080');
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0',() => {
+    console.log('listening on port' + port);
 });
 
 
