@@ -15,8 +15,8 @@ const Users = Models.User;
 const Genres = Models.Genre;
 const Directors = Models.Director; 
 
-mongoose.createConnection('mongodb://localhost:27017/cfDB', { useNewUrlParser: true, useUnifiedTopology: true });
-
+mongoose.createConnection('mongodb+srv://zachmccoll:zmccoll123@myflixdb.zu4u4q0.mongodb.net/cfDBretryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+//mongoose.createConnection('mongodb://localhost:27017/cfDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 let topMovies = [     // using express to make syntax easier
     {
