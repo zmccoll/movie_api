@@ -15,7 +15,7 @@ const Users = Models.User;
 const Genres = Models.Genre;
 const Directors = Models.Director; 
 
-mongoose.connect( process.env.CONNECTION_URI, {} );
+mongoose.connect(process.env.CONNECTION_URI);
 //mongoose.createConnection('mongodb://localhost:27017/cfDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 let topMovies = [     // using express to make syntax easier
