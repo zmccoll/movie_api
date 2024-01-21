@@ -15,7 +15,8 @@ const Users = Models.User;
 const Genres = Models.Genre;
 const Directors = Models.Director; 
 
-//mongoose.connect('mongodb://localhost:27017/cfDB', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/cfDB', { useNewUrlParser: true, useUnifiedTopology: true });
+
 
 let topMovies = [     // using express to make syntax easier
     {
